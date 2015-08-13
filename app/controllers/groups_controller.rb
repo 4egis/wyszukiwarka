@@ -12,6 +12,9 @@ class GroupsController < ApplicationController
   def show
   end
 
+  def search
+    render :json => Group.where("name like ?","%#{params[:name]}%").all
+  end
   # GET /groups/new
   def new
     @group = Group.new

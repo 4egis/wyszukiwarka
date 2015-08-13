@@ -23,5 +23,28 @@
 </table>
 
 <br>
-
 <%= link_to 'New Group', new_group_path %>
+<br>
+<div class="search">
+<input type="text" id="search-box" value="">
+<button onclick="searching()">Search</button>
+</div>
+
+<script>
+
+function searching(){
+  $(".search").append("<div class='search-results'></div>");   
+  var value = document.getElementById('search-box').value;
+    $.ajax({
+        type: 'GET',
+        url: '/search/'+value,
+        success: function(data){
+          $.each( data , function(id, val){
+            console.log(val["name"]);
+            $(".search-results").append("<a href='groups/"+val["id"]+"'>"+val["name"]+"</a><br>"); 
+        });
+        },
+        dataType: 'json'
+    });
+}
+</script>
